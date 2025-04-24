@@ -83,13 +83,12 @@ public class ImageService implements IImageService {
     public void updateImage(MultipartFile file, Long imageId) {
         Image image = getImageById(imageId);
         try {
-            Image.setFileName(file.getOriginalFilename());
-            Image.setFileName(file.getOriginalFilename());
+            image.setFileName(file.getOriginalFilename()); // <-- doğru kullanım
             image.setImage(new SerialBlob(file.getBytes()));
             imageRepository.save(image);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
+
 }

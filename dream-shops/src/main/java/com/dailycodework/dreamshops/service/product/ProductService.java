@@ -7,18 +7,21 @@ import com.dailycodework.dreamshops.repository.CategoryRepository;
 import com.dailycodework.dreamshops.repository.ProductRepository;
 import com.dailycodework.dreamshops.request.AddProductRequest;
 import com.dailycodework.dreamshops.request.ProductUpdateRequest;
+import jakarta.persistence.metamodel.SingularAttribute;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @RequiredArgsConstructor
-public abstract class ProductService implements IProductService {
+public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
     public Product addProduct(AddProductRequest request) {
         Category category = categoryRepository.findByName(request.getCategory().getName())
                 .orElseGet(() -> {
@@ -27,12 +30,7 @@ public abstract class ProductService implements IProductService {
                 });
         request.setCategory(category);
         return productRepository.save(createProduct(request, category));
-
     }
-
-
-
-
 
     private Product createProduct(AddProductRequest request, Category category) {
         return new Product(
@@ -43,7 +41,6 @@ public abstract class ProductService implements IProductService {
                 request.getDescription(),
                 category
         );
-
     }
 
     @Override
@@ -56,7 +53,7 @@ public abstract class ProductService implements IProductService {
     public void deleteProductById(Long id) {
         productRepository.findById(id)
                 .ifPresentOrElse(productRepository::delete,
-                     () -> {throw  new ProductNotFoundException("Product not found.");});
+                        () -> {throw  new ProductNotFoundException("Product not found.");});
     }
 
     @Override
@@ -65,8 +62,8 @@ public abstract class ProductService implements IProductService {
                 .map(existingProduct -> updateExistingProduct(existingProduct, request))
                 .map(productRepository :: save)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found."));
-
     }
+
     private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request) {
         existingProduct.setName(request.getName());
         existingProduct.setBrand(request.getBrand());
@@ -95,9 +92,10 @@ public abstract class ProductService implements IProductService {
         return productRepository.findByBrand(brand);
     }
 
+    // Bu kısmı düzeltmek gerekiyor. Hatalı metod adı ve çağrısı vardı.
     @Override
-    public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return productRepository.findByCategoryNameAndBrand(category, brand);
+    public List<Product> getProductsByCategoryAndBrand(String categoryName, String brand) {
+        return productRepository.findByCategoryNameAndBrand(categoryName, brand);  // doğru metodu çağırıyoruz
     }
 
     @Override
@@ -113,5 +111,10 @@ public abstract class ProductService implements IProductService {
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+    }
+
+    @Override
+    public Product getProductById(SingularAttribute<AbstractPersistable, Serializable> id) {
+        return null;  // Bu metodu doğru şekilde implement edebilirsiniz ya da kaldırabilirsiniz.
     }
 }

@@ -1,12 +1,10 @@
 package com.dailycodework.dreamshops.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 
 @Data
 @NoArgsConstructor
@@ -26,7 +24,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
@@ -39,6 +36,13 @@ public class Product {
         this.name = name;
     }
 
+    // Yapıcıyı düzeltim:
     public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.inventory = inventory;
+        this.description = description;
+        this.category = category;
     }
 }
