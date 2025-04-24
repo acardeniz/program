@@ -1,10 +1,14 @@
 package com.dailycodework.dreamshops.service.product;
 import com.dailycodework.dreamshops.model.Product;
+import com.dailycodework.dreamshops.request.AddProductRequest;
 import com.dailycodework.dreamshops.request.ProductUpdateRequest;
+import jakarta.persistence.metamodel.SingularAttribute;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import java.io.Serializable;
 import java.util.List;
 public interface IProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequest product);
 
     Product getProductById(Long id);
     void deleteProductById(Long id);
@@ -18,4 +22,5 @@ public interface IProductService {
     Long countProductsByBrandAndName(String brand, String name);
 
 
+    Product getProductById(SingularAttribute<AbstractPersistable, Serializable> id);
 }
