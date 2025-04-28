@@ -51,14 +51,14 @@ public class ImageService implements IImageService {
                 image.setImage(new SerialBlob(file.getBytes()));
                 image.setProduct(product);
 
-                // BURADA HİÇBİR ŞEY YAPMA
 
-                Image savedImage = imageRepository.save(image); // ÖNCE kaydet
 
-                // SONRA id oluştuğu için doğru url üret
+                Image savedImage = imageRepository.save(image);
+
+
                 String buildDownloadUrl = "/api/v1/images/image/download/" + savedImage.getId();
                 savedImage.setDownloadUrl(buildDownloadUrl);
-                imageRepository.save(savedImage); // İstersen güncel URL ile tekrar kaydedebilirsin.
+                imageRepository.save(savedImage);
 
                 ImageDto imageDto = new ImageDto();
                 imageDto.setImageId(savedImage.getId());
@@ -79,7 +79,7 @@ public class ImageService implements IImageService {
     public void updateImage(MultipartFile file, Long imageId) {
         Image image = getImageById(imageId);
         try {
-            image.setFileName(file.getOriginalFilename()); // <-- doğru kullanım
+            image.setFileName(file.getOriginalFilename());
             image.setImage(new SerialBlob(file.getBytes()));
             imageRepository.save(image);
         } catch (IOException | SQLException e) {

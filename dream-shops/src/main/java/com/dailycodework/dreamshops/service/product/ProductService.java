@@ -9,8 +9,10 @@ import com.dailycodework.dreamshops.request.AddProductRequest;
 import com.dailycodework.dreamshops.request.ProductUpdateRequest;
 import jakarta.persistence.metamodel.SingularAttribute;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
 
     public Product addProduct(AddProductRequest request) {
         Category category = categoryRepository.findByName(request.getCategory().getName())
