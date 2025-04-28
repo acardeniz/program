@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,10 +17,11 @@ public class Category {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    // products alanı kaldırıldı
+    // @OneToMany(mappedBy = "category")
+    // private List<Product> products;
+
     public Category(String name) {
         this.name = name;
     }
-
 }
