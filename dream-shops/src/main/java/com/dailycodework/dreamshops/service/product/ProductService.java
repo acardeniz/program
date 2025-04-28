@@ -90,6 +90,7 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
+
     }
 
     // Bu kısmı düzeltmek gerekiyor. Hatalı metod adı ve çağrısı vardı.
