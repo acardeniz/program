@@ -27,9 +27,5 @@ public class Image {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
 
 }

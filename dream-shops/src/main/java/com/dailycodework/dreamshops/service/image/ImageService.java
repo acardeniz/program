@@ -51,14 +51,14 @@ public class ImageService implements IImageService {
                 image.setImage(new SerialBlob(file.getBytes()));
                 image.setProduct(product);
 
-                String buildDownloadUrl = "/api/v1/images/image/download" + image.getId();
-                String downloadUrl = buildDownloadUrl + image.getId();
-                image.setDownloadUrl(downloadUrl);
-                Image savedImage = imageRepository.save(image);
+                // BURADA HİÇBİR ŞEY YAPMA
 
-                savedImage.setDownloadUrl(buildDownloadUrl + savedImage.getId());
-                imageRepository.save(savedImage);
+                Image savedImage = imageRepository.save(image); // ÖNCE kaydet
 
+                // SONRA id oluştuğu için doğru url üret
+                String buildDownloadUrl = "/api/v1/images/image/download/" + savedImage.getId();
+                savedImage.setDownloadUrl(buildDownloadUrl);
+                imageRepository.save(savedImage); // İstersen güncel URL ile tekrar kaydedebilirsin.
 
                 ImageDto imageDto = new ImageDto();
                 imageDto.setImageId(savedImage.getId());
@@ -66,15 +66,11 @@ public class ImageService implements IImageService {
                 imageDto.setDownloadUrl(savedImage.getDownloadUrl());
                 savedImageDto.add(imageDto);
 
-
-
-
-
             } catch (IOException | SQLException e){
                 throw new RuntimeException(e.getMessage());
-
             }
         }
+
         return savedImageDto;
 
     }
