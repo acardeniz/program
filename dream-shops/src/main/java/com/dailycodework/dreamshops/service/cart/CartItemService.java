@@ -62,19 +62,20 @@ public class CartItemService implements ICartItemService{
     public void updateItemQuantity(Long cartId, Long productId, int quantity) {
         Cart cart = cartService.getCart(cartId);
         cart.getItems().stream()
-                .filter(item -> item.getProduct()
-                        .getId().equals(productId))
+                .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst()
                 .ifPresent(item -> {
                     item.setQuantity(quantity);
                     item.setUnitPrice(item.getProduct().getPrice());
                     item.setTotalPrice();
+                    cartItemRepository.save(item);
                 });
+
         BigDecimal totalAmount = cart.getTotalAmount();
         cart.setTotalAmount(totalAmount);
         cartRepository.save(cart);
-
     }
+
     @Override
 
     public CartItem getCartItem(Long cartId, Long productId){
