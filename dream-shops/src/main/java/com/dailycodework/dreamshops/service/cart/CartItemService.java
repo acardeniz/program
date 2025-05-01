@@ -9,12 +9,13 @@ import com.dailycodework.dreamshops.repository.CartRepository;
 import com.dailycodework.dreamshops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-
+@Transactional
 public class CartItemService implements ICartItemService{
     private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
@@ -75,6 +76,7 @@ public class CartItemService implements ICartItemService{
 
     }
     @Override
+
     public CartItem getCartItem(Long cartId, Long productId){
         Cart cart = cartService.getCart(cartId);
         return cart.getItems()

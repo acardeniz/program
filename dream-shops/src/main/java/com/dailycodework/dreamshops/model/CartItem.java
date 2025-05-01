@@ -1,4 +1,6 @@
 package com.dailycodework.dreamshops.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +14,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +26,15 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    public void setTotalPrice(){
+    public void setTotalPrice() {
         this.totalPrice = this.unitPrice.multiply(new BigDecimal(quantity));
+
     }
+
+
 }
