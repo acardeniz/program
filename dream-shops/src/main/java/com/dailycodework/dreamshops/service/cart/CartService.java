@@ -2,7 +2,6 @@ package com.dailycodework.dreamshops.service.cart;
 
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dreamshops.model.Cart;
-import com.dailycodework.dreamshops.model.CartItem;
 import com.dailycodework.dreamshops.repository.CartItemRepository;
 import com.dailycodework.dreamshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ public class CartService implements ICartService{
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final AtomicLong cartIdGenerator = new AtomicLong(0);
+
 
     @Override
     public Cart getCart(Long id) {
