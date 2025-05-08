@@ -17,7 +17,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="dream-shops" options="-parameters" />
+      <module name="dream-shops" options="-parameters --add-modules jdk.internal.le --add-exports jdk.internal.le/jdk.internal.org.jline.keymap=ALL-UNNAMED" />
     </option>
   </component>
 </project>
