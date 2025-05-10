@@ -15,7 +15,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
-import static jdk.internal.org.jline.keymap.KeyMap.key;
 @Component
 public class JwtUtils {
     @Value("${auth.token.jwtSecret}")
